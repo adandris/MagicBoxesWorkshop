@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            text-align: center;
+            padding: 10px;
+        }
+
+        #playground {
+            border: 1px solid black;
+            min-height: 300px;
+            margin-top: 20px;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .magic-box {
+            background-color: gray;
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            border: 2px solid white;
+            transition: border-radius ease .1s;
+        }
+    </style>
+    <script>
+        function changeColor(color) {
+            if (selected) {
+                selected.style.backgroundColor = color;
+            }
+        }
+
+        var selected;
+
+        function select(element) {
+            if (selected) {
+                selected.style.borderColor = 'white';
+            }
+
+            element.style.borderColor = 'black';
+            selected = element;
+        }
+
+        function makeCircle() {
+            if (selected) {
+                selected.style.borderRadius = '50%';
+            }
+        }
+
+        function makeSquare() {
+            if (selected) {
+                selected.style.borderRadius = '0';
+            }
+        }
+
+        function addBox(containerId) {
+            let newBox = document.createElement("div");
+            newBox.className = "magic-box";
+            newBox.onclick = function() {select(this)};
+
+            document.getElementById(containerId).appendChild(newBox);
+        }
+
+        function removeBox(containerId) {
+            if (selected) {
+                document.getElementById(containerId).removeChild(selected);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="changeColor('green')">Green</button>
+    <button onclick="changeColor('red')">Red</button>
+
+    <button onclick="makeCircle()">Circle</button>
+    <button onclick="makeSquare()">Square</button>
+
+    <button onclick="addBox('playground')">Add box</button>
+    <button onclick="removeBox('playground')">Remove box</button>
+
+    <div id="playground">
+        <div class="magic-box" onclick="select(this)"></div>
+        <div class="magic-box" onclick="select(this)"></div>
+    </div>
+</body>
+
+</html>
